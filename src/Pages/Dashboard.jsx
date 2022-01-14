@@ -1,11 +1,24 @@
 import React, { useState } from "react";
 import Online from "../Components/Online";
-import { Users, messages } from "../data";
+import { messages, Friends } from "../data";
 import Message from "../Components/Message";
 import MessageHeader from "../Components/MessageHeader";
 
 const Dashboard = () => {
   const [currentChat, setCurrentChat] = useState(null);
+  const [findFriend, setFindFriend] = useState(Friends);
+
+  const searchedFriend = (e) => {
+    e.preventDefault();
+    let friendarray = Friends.filter((friend) => {
+      if (e.target.value === "") {
+        return friend;
+      }
+      return friend.name.toLowerCase().includes(e.target.value?.toLowerCase());
+    });
+    setFindFriend(friendarray);
+  };
+
   return (
     <div id="dashboard">
       <div className="container">
@@ -19,10 +32,11 @@ const Dashboard = () => {
                     type="text"
                     className="form-control"
                     placeholder="Search..."
+                    onChange={(e) => searchedFriend(e)}
                   />
                 </div>
-                <ul className="list-unstyled chat-list mt-2 mb-0">
-                  {Users.map((user) => (
+                <ul className="list-unstyled chat-list mt-2 mb-0 people-list-start">
+                  {findFriend.map((user) => (
                     <div key={user.id} onClick={() => setCurrentChat(user)}>
                       <Online user={user} />
                     </div>
@@ -35,14 +49,20 @@ const Dashboard = () => {
                     <MessageHeader user={currentChat} />
                     <div className="chat-history">
                       <ul className="m-b-0">
-                        {messages.map((msg) => (
-                          <Message
-                            key={msg.id}
-                            message={msg.message}
-                            time={msg.time}
-                            own={msg.own}
-                          />
-                        ))}
+                        {messages.length > 0 ? (
+                          messages?.map((msg) => (
+                            <Message
+                              key={msg.id}
+                              message={msg.message}
+                              time={msg.time}
+                              own={msg.own}
+                            />
+                          ))
+                        ) : (
+                          <h4 className="text-center">
+                            Say Hello to {currentChat.name}
+                          </h4>
+                        )}
                       </ul>
                     </div>
                     <div className="chat-message clearfix">
@@ -61,9 +81,8 @@ const Dashboard = () => {
                     </div>
                   </>
                 ) : (
-                  <h1>Start a conversation</h1>
+                  <h1 className="text-center">Start a conversation</h1>
                 )}
-                {/* for end here */}
               </div>
             </div>
           </div>

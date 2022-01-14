@@ -2,7 +2,7 @@ export const Users = [
   {
     id: 1,
     profile: "https://bootdey.com/img/Content/avatar/avatar1.png",
-    name: "Jon Snow",
+    name: "Jon",
   },
   {
     id: 2,
@@ -38,6 +38,36 @@ export const Users = [
     id: 8,
     profile: "https://bootdey.com/img/Content/avatar/avatar8.png",
     name: "Khal Drogo",
+  },
+  {
+    id: 9,
+    profile: "https://bootdey.com/img/Content/avatar/avatar1.png",
+    name: "Monica Geller",
+  },
+  {
+    id: 10,
+    profile: "https://bootdey.com/img/Content/avatar/avatar2.png",
+    name: "Ross Geller",
+  },
+  {
+    id: 11,
+    profile: "https://bootdey.com/img/Content/avatar/avatar3.png",
+    name: "Rachel Green",
+  },
+  {
+    id: 12,
+    profile: "https://bootdey.com/img/Content/avatar/avatar4.png",
+    name: "Chandler Bing",
+  },
+  {
+    id: 13,
+    profile: "https://bootdey.com/img/Content/avatar/avatar5.png",
+    name: "Joey Tribbiani",
+  },
+  {
+    id: 14,
+    profile: "https://bootdey.com/img/Content/avatar/avatar6.png",
+    name: "Phobe Buffay",
   },
 ];
 
@@ -85,5 +115,54 @@ export const messages = [
       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam nulla porro tempore vero, consectetur non repellat eius provident exercitationem et ipsum modi qui sunt cum. Libero debitis inventore at labore! Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam nulla porro tempore vero, consectetur non repellat eius provident exercitationem et ipsum modi qui sunt cum. Libero debitis inventore at labore!Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam nulla porro tempore vero, consectetur non repellat eius provident exercitationem et ipsum modi qui sunt cum. Libero debitis inventore at labore!Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam nulla porro tempore vero, consectetur non repellat eius provident exercitationem et ipsum modi qui sunt cum. Libero debitis inventore at labore!Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam nulla porro tempore vero, consectetur non repellat eius provident exercitationem et ipsum modi qui sunt cum. Libero debitis inventore at labore!",
     time: "10:15 AM, Today",
     own: false,
+  },
+];
+
+export const Friends = [
+  {
+    id: 1,
+    profile: "https://bootdey.com/img/Content/avatar/avatar1.png",
+    name: "Monica Geller",
+  },
+  {
+    id: 2,
+    profile: "https://bootdey.com/img/Content/avatar/avatar2.png",
+    name: "Ross Geller",
+  },
+  {
+    id: 3,
+    profile: "https://bootdey.com/img/Content/avatar/avatar3.png",
+    name: "Sansa Stark",
+  },
+  {
+    id: 4,
+    profile: "https://bootdey.com/img/Content/avatar/avatar4.png",
+    name: "Cersi Lannister",
+  },
+
+  {
+    id: 3,
+    profile: "https://bootdey.com/img/Content/avatar/avatar3.png",
+    name: "Rachel Green",
+  },
+  {
+    id: 4,
+    profile: "https://bootdey.com/img/Content/avatar/avatar4.png",
+    name: "Chandler Bing",
+  },
+  {
+    id: 7,
+    profile: "https://bootdey.com/img/Content/avatar/avatar7.png",
+    name: "Daenerys Targaryen",
+  },
+  {
+    id: 6,
+    profile: "https://bootdey.com/img/Content/avatar/avatar6.png",
+    name: "Phobe Buffay",
+  },
+  {
+    id: 5,
+    profile: "https://bootdey.com/img/Content/avatar/avatar5.png",
+    name: "Jammie Lannister",
   },
 ];
