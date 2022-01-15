@@ -16,6 +16,34 @@ const Card = ({ user }) => {
           <Icon set={setShow} value={show} type1="eye" type2="eye-slash" />
           <Icon set={setLike} value={like} type1="heart" type2="heart-o" />
           <Icon set={setFollowed} value={followed} type1="minus" type2="plus" />
+          {/* <div
+            className="btn btn-outline-success btn-sm"
+            onClick={() => setShow(!show)}
+          >
+            <i
+              className={show ? "fa fa-eye" : "fa fa-eye-slash"}
+              aria-hidden="true"
+            ></i>
+          </div> */}
+          {/* <div
+            className="btn btn-outline-danger btn-sm"
+            onClick={() => setLike(!like)}
+          >
+            <i
+              className={like ? "fa fa-heart" : "fa fa-heart-o"}
+              aria-hidden="true"
+            ></i>
+          </div> */}
+          {/* <div
+            className="btn btn-outline-primary btn-sm"
+            onClick={(e) => setFollowed(!followed)}
+          >
+            <i
+              className={followed ? "fa fa-minus" : "fa fa-plus"}
+              aria-hidden="true"
+            ></i>{" "}
+            {followed ? " unfollow" : " Follow"}
+          </div> */}
         </div>
       </div>
     </div>

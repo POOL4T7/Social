@@ -13,14 +13,15 @@ const Landing = () => {
     });
     setNotFriend(users);
   }, [id]);
-  
+
   return (
     <>
       {isLoggedIn ? (
         <div className="container  mt-5">
+          <h3 className="text-center mb-5">Add More Friends</h3>
           <div className="row">
             {notFriend.map((user) => (
-              <div key={user.id} className="col-xs-4 col-sm-3  col-lg-2 ">
+              <div key={user.id} className="col-xs-4 col-sm-2  col-lg-2 ">
                 <Card user={user} />
               </div>
             ))}
