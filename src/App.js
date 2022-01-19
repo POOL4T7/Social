@@ -20,6 +20,7 @@ function App() {
             <Route path="/friends" element={<Friends />} />
           </Routes>
         </div>
+
       </Router>
     </>
   );

@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Card from "../Components/Card";
 import { Users } from "../data";
-
+import Footer from "../Components/Footer";
 const Landing = () => {
   let isLoggedIn = true;
-  let id = 0;
+  let id = -1;
   const [notFriend, setNotFriend] = useState([]);
   useEffect(() => {
     let users = Users.filter((user) => {
@@ -17,16 +17,22 @@ const Landing = () => {
   return (
     <>
       {isLoggedIn ? (
-        <div className="container  mt-5">
-          <h3 className="text-center mb-5">Add More Friends</h3>
-          <div className="row">
-            {notFriend.map((user) => (
-              <div key={user.id} className="col-xs-4 col-sm-2  col-lg-2 ">
-                <Card user={user} />
-              </div>
-            ))}
+        <>
+          <div className="container  mt-5">
+            <h3 className="text-center mb-5">Add More Friends</h3>
+            <div className="row">
+              {notFriend.map((user) => (
+                <div
+                  key={user.id}
+                  className="col-xs-6 col-sm-6 col-md-4 col-lg-3"
+                >
+                  <Card user={user} />
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
+          <Footer />
+        </>
       ) : (
         <div className="container text-center p-5">
           <h1>Chat App</h1>
