@@ -36,7 +36,12 @@ const Card = ({ user }) => {
           </div>
         </div>
       </div>
-      <Modal user={user} set={setShow} setFollow={setFollowed} />
+      <Modal
+        user={user}
+        set={setShow}
+        setFollow={setFollowed}
+        follow={followed}
+      />
     </>
   );
 };

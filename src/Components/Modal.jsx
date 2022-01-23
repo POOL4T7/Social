@@ -1,6 +1,6 @@
 import React from "react";
 
-const Modal = ({ user, set, setFollow  }) => {
+const Modal = ({ user, set, setFollow, follow }) => {
   return (
     <div
       className="modal fade"
@@ -69,8 +69,11 @@ const Modal = ({ user, set, setFollow  }) => {
             >
               Close
             </button>
-            <button className="btn btn-success" onClick={() => setFollow(true)}>
-              Follow
+            <button
+              className="btn btn-success"
+              onClick={() => setFollow(!follow)}
+            >
+              {follow ? "Unfollow " : "Follow"}
             </button>
           </div>
         </div>
