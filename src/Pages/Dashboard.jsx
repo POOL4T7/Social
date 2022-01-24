@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import { useState } from "react";
+// import { io } from "socket.io-client";
 import Online from "../Components/Online";
 import { messages, Friends } from "../data";
 import Message from "../Components/Message";
@@ -7,6 +8,17 @@ import MessageHeader from "../Components/MessageHeader";
 const Dashboard = () => {
   const [currentChat, setCurrentChat] = useState(null);
   const [findFriend, setFindFriend] = useState(Friends);
+
+  // const socket = io("ws://localhost:8080");
+  // useEffect(() => {
+  //   socket.on("connect", () => {
+  //     socket.emit("addUser", { userId: "123456789", socketId: socket.id });
+  //   });
+
+  //   socket.on("disconnect", () => {
+  //     console.log(socket.id); // undefined
+  //   });
+  // }, [socket]);
 
   const searchedFriend = (e) => {
     e.preventDefault();
