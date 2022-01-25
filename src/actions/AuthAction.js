@@ -9,6 +9,7 @@ import {
     USER_LOGIN_RESET,
     USER_LOGOUT,
 } from "../constraints/AuthConstraint";
+import { toast } from "react-toastify";
 
 import axios from "axios";
 
@@ -17,13 +18,18 @@ export const register = (email, password, name, gender) => async (dispatch) => {
         dispatch({ type: USER_REGISTER_REQUEST });
         const { data } = await axios.post("auth/register", {
             email,
-            password, name, gender
+            password,
+            name,
+            gender,
         });
+        // toast.success(data.msg);
         dispatch({ type: USER_REGISTER_SUCCESS, payload: data });
         dispatch({ type: USER_LOGIN_SUCCESS, payload: data });
         localStorage.setItem("userInfo", JSON.stringify(data.data));
     } catch (e) {
-        console.log(`register authAction`, e.message);
+        toast.warning(
+            e.response && e.response.data.msg ? e.response.data.msg : e.message
+        );
         dispatch({
             type: USER_REGISTER_FAIL,
             payload: e.response && e.response.data.msg ? e.response.data : e.message,
@@ -41,9 +47,13 @@ export const login = (email, password) => async (dispatch) => {
             email,
             password,
         });
+        // toast.success(data.msg);
         dispatch({ type: USER_LOGIN_SUCCESS, payload: data });
         localStorage.setItem("userInfo", JSON.stringify(data.data));
     } catch (e) {
+        toast.warning(
+            e.response && e.response.data.msg ? e.response.data.msg : e.message
+        );
         dispatch({
             type: USER_LOGIN_FAIL,
             payload:

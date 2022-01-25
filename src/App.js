@@ -5,6 +5,8 @@ import Login from "./Pages/Login";
 import Register from "./Pages/Register";
 import Dashboard from "./Pages/Dashboard";
 import Friends from "./Pages/Friends";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   return (
@@ -12,6 +14,7 @@ function App() {
       <Router>
         <div className="main">
           <Navbar />
+          <ToastContainer />
           <Routes>
             <Route path="/" element={<Landing />} />
             <Route path="/login" element={<Login />} />
@@ -20,7 +23,6 @@ function App() {
             <Route path="/friends" element={<Friends />} />
           </Routes>
         </div>
-
       </Router>
     </>
   );

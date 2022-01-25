@@ -3,10 +3,13 @@ import { Link } from "react-router-dom";
 import Card from "../Components/Card";
 import { Users } from "../data";
 import Footer from "../Components/Footer";
+import { useSelector } from "react-redux";
+
 const Landing = () => {
-  let isLoggedIn = true;
   let id = -1;
   const [notFriend, setNotFriend] = useState([]);
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
   useEffect(() => {
     let users = Users.filter((user) => {
       return user.id !== id;
@@ -16,10 +19,16 @@ const Landing = () => {
 
   return (
     <>
-      {isLoggedIn ? (
+      {userInfo?.token ? (
         <>
           <div className="container  mt-5">
-            <h3 className="text-center mb-5">Add More Friends</h3>
+            <h3 className="text-center mb-5">
+              Hello{" "}
+              <span style={{ color: "red" }}>
+                {userInfo.user.profileDetails.name.split(" ")[0]}
+              </span>{" "}
+              Add More Friends
+            </h3>
             <div className="row">
               {notFriend.map((user) => (
                 <div

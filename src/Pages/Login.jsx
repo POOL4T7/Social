@@ -1,24 +1,37 @@
 import FormConatiner from "../Components/FormConatiner";
-import { Link, useSearchParams } from "react-router-dom";
-import { useState } from "react";
-import axios from "axios";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { login } from "../actions/AuthAction";
+import { useDispatch, useSelector } from "react-redux";
 
 const Login = () => {
   // eslint-disable-next-line no-unused-vars
   const [searchParams, setSearchParams] = useSearchParams();
   let redirect = searchParams.get("redirect") || "/";
 
+  let dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const navigate = useNavigate();
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
+
   const submitHandler = async (e) => {
     e.preventDefault();
-    const res = await axios.post("auth/login", {
-      email,
-      password,
-    });
-    console.log(res.data);
+    try {
+      await dispatch(login(email, password));
+    } catch (e) {
+      console.log(e.message);
+    }
   };
+
+  useEffect(() => {
+    if (userInfo?.token) {
+      navigate("/");
+    }
+  }, [navigate, userInfo?.token]);
+
   return (
     <>
       <FormConatiner>
