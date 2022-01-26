@@ -2,6 +2,7 @@ import { createStore, combineReducers, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
 import { userRegisterReducer, userLoginReducer } from "./reducers/AuthReducer";
+import { userDetailsReducer, userUpdateProfileReducer } from "./reducers/userReducer";
 
 // import {
 //     userFriendListReducer,
@@ -12,6 +13,8 @@ import { userRegisterReducer, userLoginReducer } from "./reducers/AuthReducer";
 const reducer = combineReducers({
     userRegister: userRegisterReducer,
     userLogin: userLoginReducer,
+    userDetails: userDetailsReducer,
+    userProfileUpdate: userUpdateProfileReducer,
     // userFriendList: userFriendListReducer,
     // followUser: userFollowFriendReducer,
     // unfollowUser: userUnFollowFriendReducer,
