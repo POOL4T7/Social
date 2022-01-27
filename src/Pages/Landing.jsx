@@ -19,13 +19,13 @@ const Landing = () => {
 
   return (
     <>
-      {userInfo?.token ? (
+      {userInfo?.userId ? (
         <>
           <div className="container  mt-5">
             <h3 className="text-center mb-5">
               Hello{" "}
               <span style={{ color: "red" }}>
-                {userInfo.user.profileDetails.name.split(" ")[0]}
+                {userInfo.profileDetails.name.split(" ")[0]}
               </span>{" "}
               Add More Friends
             </h3>

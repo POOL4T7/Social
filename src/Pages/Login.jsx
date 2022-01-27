@@ -27,10 +27,10 @@ const Login = () => {
   };
 
   useEffect(() => {
-    if (userInfo?.token) {
+    if (userInfo?.userId) {
       navigate("/");
     }
-  }, [navigate, userInfo?.token]);
+  }, [navigate, userInfo?.userId]);
 
   return (
     <>

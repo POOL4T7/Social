@@ -48,7 +48,7 @@ const Profile = () => {
     try {
       dispatch(
         updateUserProfile({
-          id: userInfo.user._id,
+          id: userInfo._id,
           username,
           name,
           gender,

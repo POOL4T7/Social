@@ -7,16 +7,16 @@ import {
     USER_UPDATE_PROFILE_SUCCESS,
     USER_UPDATE_PROFILE_FAIL,
 } from "../constraints/UserConstraint";
+import { updateUser, getCookie } from "../Utils/helper";
+import { toast } from 'react-toastify'
 
 export const getUserProfileDetails = (id) => async (dispatch, getState) => {
     try {
         dispatch({ type: USER_PROFILE_DETAILS_REQUEST });
-        const {
-            userLogin: { userInfo },
-        } = getState();
+        const token = getCookie("token");
         const config = {
             headers: {
-                "login-token": `${userInfo.token}`,
+                "login-token": token,
             },
         };
         const { data } = await axios.get("/user/ownprofile", config);
@@ -30,21 +30,21 @@ export const getUserProfileDetails = (id) => async (dispatch, getState) => {
     }
 };
 
-export const updateUserProfile = (user) => async (dispatch, getState) => {
+export const updateUserProfile = (user) => async (dispatch) => {
     try {
         dispatch({ type: USER_UPDATE_PROFILE_REQUEST });
-        const {
-            userLogin: { userInfo },
-        } = getState();
+        const token = getCookie("token");
         const config = {
             headers: {
-                'login-token': `${userInfo.token}`,
+                "login-token": token,
             },
         };
-        console.log(user);
         const { data } = await axios.patch("/user/ownprofile", user, config);
         dispatch({ type: USER_UPDATE_PROFILE_SUCCESS, payload: data });
+        toast.success(data.msg)
+        updateUser(data);
     } catch (e) {
+        toast.success(e.response && e.response.data.msg ? e.response.data.msg : e.message)
         dispatch({
             type: USER_UPDATE_PROFILE_FAIL,
             payload:

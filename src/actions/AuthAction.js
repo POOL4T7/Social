@@ -10,6 +10,7 @@ import {
     USER_LOGOUT,
 } from "../constraints/AuthConstraint";
 import { toast } from "react-toastify";
+import { authenticate, signout } from '../Utils/helper'
 
 import axios from "axios";
 
@@ -25,7 +26,7 @@ export const register = (email, password, name, gender) => async (dispatch) => {
         // toast.success(data.msg);
         dispatch({ type: USER_REGISTER_SUCCESS, payload: data });
         dispatch({ type: USER_LOGIN_SUCCESS, payload: data });
-        localStorage.setItem("userInfo", JSON.stringify(data.data));
+        authenticate(data)
     } catch (e) {
         toast.warning(
             e.response && e.response.data.msg ? e.response.data.msg : e.message
@@ -50,6 +51,7 @@ export const login = (email, password) => async (dispatch) => {
         // toast.success(data.msg);
         dispatch({ type: USER_LOGIN_SUCCESS, payload: data });
         localStorage.setItem("userInfo", JSON.stringify(data.data));
+        authenticate(data)
     } catch (e) {
         toast.warning(
             e.response && e.response.data.msg ? e.response.data.msg : e.message
@@ -66,6 +68,6 @@ export const login = (email, password) => async (dispatch) => {
 };
 
 export const logout = () => async (dispatch) => {
-    localStorage.removeItem("userInfo");
+    signout()
     dispatch({ type: USER_LOGOUT });
 };
