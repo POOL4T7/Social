@@ -2,6 +2,10 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import FormConatiner from "../Components/FormConatiner";
+import {
+  getUserProfileDetails,
+  updateUserProfile,
+} from "../actions/UserAction";
 
 const Profile = () => {
   const [values, setValues] = useState({
@@ -36,37 +40,55 @@ const Profile = () => {
   let dispatch = useDispatch();
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
+  const userDetails = useSelector((state) => state.userDetails);
+  const { loading, error, user } = userDetails;
   let navigator = useNavigate();
-  const submitHandler = async () => {};
+  const submitHandler = async (e) => {
+    e.preventDefault();
+    try {
+      dispatch(
+        updateUserProfile({
+          id: userInfo.user._id,
+          username,
+          name,
+          gender,
+          bio,
+          age,
+        })
+      );
+    } catch (e) {
+      console.log(e.message);
+    }
+  };
 
   useEffect(() => {
     if (!userInfo) {
       navigator("/login");
     } else {
-      if (!userInfo?.token && userInfo?.user?.email) {
-        console.log("cant load data");
+      if (!user.email && !user.userId) {
+        dispatch(getUserProfileDetails("profile"));
       } else {
-        let user = userInfo.user;
+        let profile = user.profileDetails;
         setValues({
           ...values,
-          name: user.profileDetails.name,
-          username: user.profileDetails.username,
-          age: user.profileDetails.age,
-          gender: user.profileDetails.gender,
+          name: profile.name,
+          username: profile.username,
+          age: profile.age,
+          gender: profile.gender,
           email: user.email,
-          country: user.profileDetails.country,
-          bio: user.profileDetails.bio,
-          followers: user.profileDetails.followers.length,
-          followings: user.profileDetails.followings.length,
+          country: profile.country,
+          bio: profile.bio,
+          followers: user.followers.length,
+          followings: user.followings.length,
         });
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userInfo]);
-
+  }, [dispatch, navigator, user, userInfo]);
   return (
     <>
       <FormConatiner>
+        {loading && <h1>Loading</h1>}
         <h1 className="text-center">Profile Update</h1>
         <form>
           <div className="form-floating mb-3">
