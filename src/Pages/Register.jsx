@@ -11,7 +11,7 @@ const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
-  const [gender, setGender] = useState("");
+  const [gender, setGender] = useState("Male");
   let dispatch = useDispatch();
   const navigate = useNavigate();
   const userLogin = useSelector((state) => state.userLogin);
@@ -20,7 +20,7 @@ const Register = () => {
   const submitHandler = async (e) => {
     e.preventDefault();
     try {
-      dispatch(register(email, password));
+      dispatch(register(email, password, name, gender));
     } catch (e) {
       console.log(e.message);
     }

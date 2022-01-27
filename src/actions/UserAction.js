@@ -19,7 +19,7 @@ export const getUserProfileDetails = (id) => async (dispatch, getState) => {
                 "login-token": token,
             },
         };
-        const { data } = await axios.get("/user/ownprofile", config);
+        const { data } = await axios.get("https://social1server.herokuapp.com/api/user/ownprofile", config);
         dispatch({ type: USER_PROFILE_DETAILS_SUCCESS, payload: data });
     } catch (e) {
         dispatch({
@@ -39,7 +39,7 @@ export const updateUserProfile = (user) => async (dispatch) => {
                 "login-token": token,
             },
         };
-        const { data } = await axios.patch("/user/ownprofile", user, config);
+        const { data } = await axios.patch("https://social1server.herokuapp.com/api/user/ownprofile", user, config);
         dispatch({ type: USER_UPDATE_PROFILE_SUCCESS, payload: data });
         toast.success(data.msg)
         updateUser(data);

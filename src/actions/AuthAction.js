@@ -17,13 +17,12 @@ import axios from "axios";
 export const register = (email, password, name, gender) => async (dispatch) => {
     try {
         dispatch({ type: USER_REGISTER_REQUEST });
-        const { data } = await axios.post("auth/register", {
+        const { data } = await axios.post("https://social1server.herokuapp.com/api/auth/register", {
             email,
             password,
             name,
             gender,
         });
-        // toast.success(data.msg);
         dispatch({ type: USER_REGISTER_SUCCESS, payload: data });
         dispatch({ type: USER_LOGIN_SUCCESS, payload: data });
         authenticate(data)
@@ -44,11 +43,10 @@ export const register = (email, password, name, gender) => async (dispatch) => {
 export const login = (email, password) => async (dispatch) => {
     try {
         dispatch({ type: USER_LOGIN_REQUEST });
-        const { data } = await axios.post("auth/login", {
+        const { data } = await axios.post("https://social1server.herokuapp.com/api/auth/login", {
             email,
             password,
         });
-        // toast.success(data.msg);
         dispatch({ type: USER_LOGIN_SUCCESS, payload: data });
         localStorage.setItem("userInfo", JSON.stringify(data.data));
         authenticate(data)

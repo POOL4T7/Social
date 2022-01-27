@@ -41,7 +41,7 @@ const Profile = () => {
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
   const userDetails = useSelector((state) => state.userDetails);
-  const { loading, error, user } = userDetails;
+  const { loading, user } = userDetails;
   let navigator = useNavigate();
   const submitHandler = async (e) => {
     e.preventDefault();
