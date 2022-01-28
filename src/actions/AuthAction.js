@@ -10,14 +10,14 @@ import {
     USER_LOGOUT,
 } from "../constraints/AuthConstraint";
 import { toast } from "react-toastify";
-import { authenticate, signout } from '../Utils/helper'
+import { authenticate, signout } from "../Utils/helper";
 
-import axios from "axios";
+import axios from "../Utils/axios";
 
 export const register = (email, password, name, gender) => async (dispatch) => {
     try {
         dispatch({ type: USER_REGISTER_REQUEST });
-        const { data } = await axios.post("https://social1server.herokuapp.com/api/auth/register", {
+        const { data } = await axios.post("/auth/register", {
             email,
             password,
             name,
@@ -25,7 +25,7 @@ export const register = (email, password, name, gender) => async (dispatch) => {
         });
         dispatch({ type: USER_REGISTER_SUCCESS, payload: data });
         dispatch({ type: USER_LOGIN_SUCCESS, payload: data });
-        authenticate(data)
+        authenticate(data);
     } catch (e) {
         toast.warning(
             e.response && e.response.data.msg ? e.response.data.msg : e.message
@@ -43,13 +43,13 @@ export const register = (email, password, name, gender) => async (dispatch) => {
 export const login = (email, password) => async (dispatch) => {
     try {
         dispatch({ type: USER_LOGIN_REQUEST });
-        const { data } = await axios.post("https://social1server.herokuapp.com/api/auth/login", {
+        const { data } = await axios.post("/auth/login", {
             email,
             password,
         });
         dispatch({ type: USER_LOGIN_SUCCESS, payload: data });
         localStorage.setItem("userInfo", JSON.stringify(data.data));
-        authenticate(data)
+        authenticate(data);
     } catch (e) {
         toast.warning(
             e.response && e.response.data.msg ? e.response.data.msg : e.message
@@ -66,6 +66,6 @@ export const login = (email, password) => async (dispatch) => {
 };
 
 export const logout = () => async (dispatch) => {
-    signout()
+    signout();
     dispatch({ type: USER_LOGOUT });
 };

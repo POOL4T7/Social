@@ -1,10 +1,10 @@
 import React from "react";
 
-const Modal = ({ user, set, setFollow, follow }) => {
+const Modal = ({ _id, user, set, setFollow, follow }) => {
   return (
     <div
       className="modal fade"
-      id={`id${user.id}`}
+      id={`id${_id}`}
       tabIndex="-1"
       aria-labelledby="exampleModalLabel"
       aria-hidden="true"

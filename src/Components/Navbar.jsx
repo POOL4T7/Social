@@ -44,7 +44,7 @@ const Navbar = () => {
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               <li className="nav-item">
                 {userInfo?.userId ? (
-                  <div class="dropdown">
+                  <div className="dropdown">
                     <Link
                       className="nav-link"
                       to="#"
@@ -55,16 +55,16 @@ const Navbar = () => {
                       {userInfo.profileDetails.name[0]}
                     </Link>
                     <ul
-                      class="dropdown-menu"
+                      className="dropdown-menu"
                       aria-labelledby="dropdownMenuLink"
                     >
                       <li>
-                        <Link class="dropdown-item" to="/profile">
+                        <Link className="dropdown-item" to="/profile">
                           Profile
                         </Link>
                       </li>
                       <li>
-                        <button class="dropdown-item" onClick={logoutHandler}>
+                        <button className="dropdown-item" onClick={logoutHandler}>
                           Logout
                         </button>
                       </li>
