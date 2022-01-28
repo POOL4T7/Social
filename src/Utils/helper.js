@@ -42,7 +42,6 @@ export const removeLocalStorage = key => {
 
 // authenticate user by passing data to cookie and localstorage during signin
 export const authenticate = (response) => {
-    console.log('AUTHENTICATE HELPER ON SIGNIN RESPONSE', response);
     setCookie('token', response.data.token);
     setLocalStorage('userInfo', response.data.user);
 };
@@ -53,7 +52,6 @@ export const signout = () => {
 };
 
 export const updateUser = (response) => {
-    console.log('UPDATE USER IN LOCALSTORAGE HELPERS', response);
     if (typeof window !== 'undefined') {
         let auth = JSON.parse(localStorage.getItem('userInfo'));
         auth = response.data;

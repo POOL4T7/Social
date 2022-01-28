@@ -6,6 +6,7 @@ import Register from "./Pages/Register";
 import Dashboard from "./Pages/Dashboard";
 import Friends from "./Pages/Friends";
 import Profile from './Pages/Profile'
+import Setting from "./Pages/Setting";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -23,6 +24,7 @@ function App() {
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/friends" element={<Friends />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/setting" element={<Setting />} />
           </Routes>
         </div>
       </Router>

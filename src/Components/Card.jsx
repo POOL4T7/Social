@@ -13,7 +13,7 @@ const Card = ({ user }) => {
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
   const [show, setShow] = useState(false);
-  const [like, setLike] = useState(false);
+  const [like, setLike] = useState(user?.likes.includes(userInfo?.userId));
   const [followed, setFollowed] = useState(
     user?.followers.includes(userInfo?.userId)
   );

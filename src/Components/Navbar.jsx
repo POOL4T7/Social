@@ -52,7 +52,7 @@ const Navbar = () => {
                       data-bs-toggle="dropdown"
                       aria-expanded="false"
                     >
-                      {userInfo.profileDetails.name[0]}
+                      {userInfo.profileDetails.name[0].toUpperCase()}
                     </Link>
                     <ul
                       className="dropdown-menu"
@@ -64,7 +64,15 @@ const Navbar = () => {
                         </Link>
                       </li>
                       <li>
-                        <button className="dropdown-item" onClick={logoutHandler}>
+                        <Link className="dropdown-item" to="/setting">
+                          Settings
+                        </Link>
+                      </li>
+                      <li>
+                        <button
+                          className="dropdown-item"
+                          onClick={logoutHandler}
+                        >
                           Logout
                         </button>
                       </li>

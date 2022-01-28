@@ -3,19 +3,16 @@ import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { login } from "../actions/AuthAction";
 import { useDispatch, useSelector } from "react-redux";
+import Spinner from "../Components/Spinner";
 
 const Login = () => {
-  // eslint-disable-next-line no-unused-vars
-  const [searchParams, setSearchParams] = useSearchParams();
-  let redirect = searchParams.get("redirect") || "/";
-
   let dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const navigate = useNavigate();
   const userLogin = useSelector((state) => state.userLogin);
-  const { userInfo } = userLogin;
+  const { userInfo, loading } = userLogin;
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -34,6 +31,7 @@ const Login = () => {
 
   return (
     <>
+      {loading && <Spinner />}
       <FormConatiner>
         <h1 className="text-center">Login form</h1>
         <form>
@@ -72,10 +70,7 @@ const Login = () => {
         <div className="row pt-3">
           <div className="col">
             New Customer?
-            <Link
-              className="link-secondary"
-              to={redirect ? `/register?redirect?=${redirect}` : "/register"}
-            >
+            <Link className="link-secondary" to="/register">
               {" "}
               Register
             </Link>

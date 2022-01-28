@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from "react";
 import FormConatiner from "../Components/FormConatiner";
-import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { register } from "../actions/AuthAction";
 import { useDispatch, useSelector } from "react-redux";
+import Spinner from "../Components/Spinner";
 
 const Register = () => {
-  // eslint-disable-next-line no-unused-vars
-  const [searchParams, setSearchParams] = useSearchParams();
-  let redirect = searchParams.get("redirect") || "/";
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
@@ -16,6 +14,8 @@ const Register = () => {
   const navigate = useNavigate();
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
+  const userRegister = useSelector((state) => state.userRegister);
+  const { loading } = userRegister;
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -33,6 +33,7 @@ const Register = () => {
 
   return (
     <>
+      {loading && <Spinner />}
       <FormConatiner>
         <h1 className="text-center">Register form</h1>
         <form>
@@ -99,10 +100,7 @@ const Register = () => {
         </form>
         <div className="row pt-3">
           <div className="col">
-            Already have an account ?{" "}
-            <Link to={redirect ? `/login?redirect?=${redirect}` : "/login"}>
-              Login
-            </Link>
+            Already have an account ? <Link to="/login">Login</Link>
           </div>
         </div>
       </FormConatiner>

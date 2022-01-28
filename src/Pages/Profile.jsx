@@ -6,6 +6,7 @@ import {
   getUserProfileDetails,
   updateUserProfile,
 } from "../actions/UserAction";
+import Spinner from "../Components/Spinner";
 
 const Profile = () => {
   const [values, setValues] = useState({
@@ -44,6 +45,8 @@ const Profile = () => {
   const { userInfo } = userLogin;
   const userDetails = useSelector((state) => state.userDetails);
   const { loading, user } = userDetails;
+  const userProfileUpdate = useSelector((state) => state.userProfileUpdate);
+  const { loading: updateLoading } = userProfileUpdate;
   let navigator = useNavigate();
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -91,7 +94,7 @@ const Profile = () => {
   return (
     <>
       <FormConatiner>
-        {loading && <h1>Loading</h1>}
+        {(loading || updateLoading) && <Spinner />}
         <h1 className="text-center">Profile Update</h1>
         <form>
           <div className="form-floating mb-3">
@@ -154,7 +157,7 @@ const Profile = () => {
             <div className="col-md">
               <div className="form-floating">
                 <input
-                  type="email"
+                  type="text"
                   className="form-control"
                   id="followers"
                   placeholder="followers"
@@ -167,7 +170,7 @@ const Profile = () => {
             <div className="col-md">
               <div className="form-floating">
                 <input
-                  type="email"
+                  type="text"
                   className="form-control"
                   id="followings"
                   placeholder="followings"
@@ -182,7 +185,7 @@ const Profile = () => {
             <div className="col-md">
               <div className="form-floating">
                 <input
-                  type="email"
+                  type="text"
                   className="form-control"
                   id="followers"
                   placeholder="followers"
@@ -195,7 +198,7 @@ const Profile = () => {
             <div className="col-md">
               <div className="form-floating">
                 <input
-                  type="email"
+                  type="text"
                   className="form-control"
                   id="followings"
                   placeholder="followings"

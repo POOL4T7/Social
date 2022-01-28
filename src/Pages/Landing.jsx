@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Card from "../Components/Card";
-import Footer from "../Components/Footer";
+// import Footer from "../Components/Footer";
 import { useSelector, useDispatch } from "react-redux";
 import { getUsersList } from "../actions/UserAction";
+import Spinner from "../Components/Spinner";
 
 const Landing = () => {
   let dispatch = useDispatch();
@@ -13,6 +14,7 @@ const Landing = () => {
   const { userInfo } = userLogin;
   const usersList = useSelector((state) => state.usersList);
   const { List, loading, error, success } = usersList;
+
 
   useEffect(() => {
     if (!loading && !success) {
@@ -31,6 +33,7 @@ const Landing = () => {
 
   return (
     <>
+      {loading && <Spinner />}
       {userInfo?.userId ? (
         <>
           <div className="container  mt-5">
