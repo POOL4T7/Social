@@ -67,7 +67,7 @@ export const updateUserProfile = (user) => async (dispatch) => {
 export const getUsersList = () => async (dispatch) => {
     try {
         dispatch({ type: USERS_LIST_REQUEST });
-        const { data } = await axios.get("/api/user/list");
+        const { data } = await axios.get("/user/list");
         dispatch({ type: USERS_LIST_SUCCESS, payload: data });
     } catch (e) {
         dispatch({
