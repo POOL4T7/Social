@@ -58,7 +58,7 @@ const Landing = () => {
               </>
             )}
           </div>
-          <Footer />
+          {/* <Footer /> */}
         </>
       ) : (
         <div className="container text-center p-5">

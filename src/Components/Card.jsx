@@ -2,7 +2,12 @@ import React, { useState } from "react";
 import Icon from "./Icon";
 import Modal from "./Modal";
 import { useDispatch, useSelector } from "react-redux";
-import { followUser, unFollowUser } from "../actions/UserAction";
+import {
+  followUser,
+  unFollowUser,
+  likeUser,
+  disLikeUser,
+} from "../actions/UserAction";
 
 const Card = ({ user }) => {
   const userLogin = useSelector((state) => state.userLogin);
@@ -18,25 +23,40 @@ const Card = ({ user }) => {
     e.preventDefault();
     console.log("followed", followed);
     try {
-      await dispatch(followUser(user.userId));
+      if (followed) {
+        await dispatch(unFollowUser(user.userId));
+      } else {
+        await dispatch(followUser(user.userId));
+      }
     } catch (e) {
       console.log(e.message);
     }
   };
 
-  const unFollowHandler = async (e) => {
+  const likeHandler = async (e) => {
     e.preventDefault();
     try {
-      await unFollowUser(user.userId);
+      if (like) {
+        await dispatch(disLikeUser(user.userId));
+      } else {
+        await dispatch(likeUser(user.userId));
+      }
     } catch (e) {
       console.log(e.message);
     }
   };
+
   return (
     <>
       <div className="card">
         <img
-          src={user.profileDetails.profile}
+          src={
+            user.profileDetails.profile
+              ? user.profileDetails.profile
+              : user.profileDetails.gender === "Male"
+              ? "/assests/images/boy.jpg"
+              : "/assests/images/girl.jpg"
+          }
           className="card-img-top rounded"
           alt="profile"
           width="100%"
@@ -55,8 +75,10 @@ const Card = ({ user }) => {
             <div data-bs-toggle="modal" data-bs-target={`#id${user._id}`}>
               <Icon set={setShow} value={show} type1="eye" type2="eye-slash" />
             </div>
-            <Icon set={setLike} value={like} type1="heart" type2="heart-o" />
-            <div onClick={followed ? unFollowHandler : followHandler}>
+            <div onClick={likeHandler}>
+              <Icon set={setLike} value={like} type1="heart" type2="heart-o" />
+            </div>
+            <div onClick={followHandler}>
               <Icon
                 set={setFollowed}
                 value={followed}
@@ -73,6 +95,7 @@ const Card = ({ user }) => {
         set={setShow}
         setFollow={setFollowed}
         follow={followed}
+        followHandler={followHandler}
       />
     </>
   );

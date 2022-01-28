@@ -12,6 +12,8 @@ import {
 import { toast } from "react-toastify";
 import { authenticate, signout } from "../Utils/helper";
 
+import { USER_PROFILE_DETAILS_RESET, USER_UPDATE_PROFILE_RESET } from "../constraints/UserConstraint"
+
 import axios from "../Utils/axios";
 
 export const register = (email, password, name, gender) => async (dispatch) => {
@@ -67,5 +69,7 @@ export const login = (email, password) => async (dispatch) => {
 
 export const logout = () => async (dispatch) => {
     signout();
-    dispatch({ type: USER_LOGOUT });
+    await dispatch({ type: USER_LOGOUT });
+    await dispatch({ type: USER_PROFILE_DETAILS_RESET });
+    await dispatch({ type: USER_UPDATE_PROFILE_RESET });
 };

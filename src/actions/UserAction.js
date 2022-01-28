@@ -14,7 +14,13 @@ import {
     USER_FOLLOW_FAIL,
     USER_UNFOLLOW_REQUEST,
     USER_UNFOLLOW_SUCCESS,
-    USER_UNFOLLOW_FAIL
+    USER_UNFOLLOW_FAIL,
+    USER_LIKE_REQUEST,
+    USER_LIKE_SUCCESS,
+    USER_LIKE_FAIL,
+    USER_DISLIKE_REQUEST,
+    USER_DISLIKE_SUCCESS,
+    USER_DISLIKE_FAIL,
 } from "../constraints/UserConstraint";
 import { updateUser, getCookie } from "../Utils/helper";
 import { toast } from "react-toastify";
@@ -78,7 +84,7 @@ export const getUsersList = () => async (dispatch) => {
     }
 };
 
-export const followUser = (id) => async (dispatch) => {
+export const followUser = (userId) => async (dispatch) => {
     try {
         dispatch({ type: USER_FOLLOW_REQUEST });
         const token = getCookie("token");
@@ -87,13 +93,11 @@ export const followUser = (id) => async (dispatch) => {
                 "login-token": token,
             },
         };
-        const { data } = await axios.patch(`/user/${id}/follow`, {}, config);
-        // const res = await axios.get("/user/ownprofile", config);
-        toast.success(data.msg)
+        const { data } = await axios.patch(`/user/${userId}/follow`, {}, config);
+        toast.success(data.msg);
         dispatch({ type: USER_FOLLOW_SUCCESS, payload: data });
-        // updateUser(res.data);
     } catch (e) {
-        toast.success(
+        toast.warning(
             e.response && e.response.data.msg ? e.response.data.msg : e.message
         );
         dispatch({
@@ -104,7 +108,7 @@ export const followUser = (id) => async (dispatch) => {
     }
 };
 
-export const unFollowUser = (id) => async (dispatch) => {
+export const unFollowUser = (userId) => async (dispatch) => {
     try {
         dispatch({ type: USER_UNFOLLOW_REQUEST });
         const token = getCookie("token");
@@ -113,11 +117,11 @@ export const unFollowUser = (id) => async (dispatch) => {
                 "login-token": token,
             },
         };
-        const { data } = await axios.patch(`/user/${id}/unfollow`, {}, config);
-        toast.success(data.msg)
+        const { data } = await axios.patch(`/user/${userId}/unfollow`, {}, config);
+        toast.warn(data.msg);
         dispatch({ type: USER_UNFOLLOW_SUCCESS, payload: data });
     } catch (e) {
-        toast.success(
+        toast.warning(
             e.response && e.response.data.msg ? e.response.data.msg : e.message
         );
         dispatch({
@@ -128,3 +132,64 @@ export const unFollowUser = (id) => async (dispatch) => {
     }
 };
 
+export const likeUser = (userId) => async (dispatch) => {
+    try {
+        dispatch({ type: USER_LIKE_REQUEST });
+        const token = getCookie("token");
+        const config = {
+            headers: {
+                "login-token": token,
+            },
+        };
+        const { data } = await axios.patch(`/user/${userId}/like`, {}, config);
+        toast.success(data.msg);
+        dispatch({ type: USER_LIKE_SUCCESS, payload: data });
+    } catch (e) {
+        toast.warning(
+            e.response && e.response.data.msg ? e.response.data.msg : e.message
+        );
+        dispatch({
+            type: USER_LIKE_FAIL,
+            payload:
+                e.response && !e.response.data.success ? e.response.data : e.message,
+        });
+    }
+};
+
+export const disLikeUser = (userId) => async (dispatch) => {
+    try {
+        dispatch({ type: USER_DISLIKE_REQUEST });
+        const token = getCookie("token");
+        const config = {
+            headers: {
+                "login-token": token,
+            },
+        };
+        const { data } = await axios.patch(`/user/${userId}/dislike`, {}, config);
+        toast.warn(data.msg);
+        dispatch({ type: USER_DISLIKE_SUCCESS, payload: data });
+    } catch (e) {
+        toast.warning(
+            e.response && e.response.data.msg ? e.response.data.msg : e.message
+        );
+        dispatch({
+            type: USER_DISLIKE_FAIL,
+            payload:
+                e.response && !e.response.data.success ? e.response.data : e.message,
+        });
+    }
+};
+
+export const getUsersFriendList = () => async (dispatch) => {
+    try {
+        dispatch({ type: USERS_LIST_REQUEST });
+        const { data } = await axios.get("/user/list");
+        dispatch({ type: USERS_LIST_SUCCESS, payload: data });
+    } catch (e) {
+        dispatch({
+            type: USERS_LIST_FAIL,
+            payload:
+                e.response && !e.response.data.success ? e.response.data : e.message,
+        });
+    }
+};

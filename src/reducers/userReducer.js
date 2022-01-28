@@ -10,12 +10,19 @@ import {
     USERS_LIST_REQUEST,
     USERS_LIST_SUCCESS,
     USERS_LIST_FAIL,
+    USERS_LIST_RESET,
     USER_FOLLOW_REQUEST,
     USER_FOLLOW_SUCCESS,
     USER_FOLLOW_FAIL,
     USER_UNFOLLOW_REQUEST,
     USER_UNFOLLOW_SUCCESS,
     USER_UNFOLLOW_FAIL,
+    USER_LIKE_REQUEST,
+    USER_LIKE_SUCCESS,
+    USER_LIKE_FAIL,
+    USER_DISLIKE_REQUEST,
+    USER_DISLIKE_SUCCESS,
+    USER_DISLIKE_FAIL,
 } from "../constraints/UserConstraint";
 
 export const userDetailsReducer = (state = { user: {} }, action) => {
@@ -101,6 +108,40 @@ export const userUnFollowReducer = (state = {}, action) => {
                 msg: action.payload.msg,
             };
         case USER_UNFOLLOW_FAIL:
+            return { loading: false, error: action.payload.msg };
+        default:
+            return state;
+    }
+};
+
+export const userLikeReducer = (state = {}, action) => {
+    switch (action.type) {
+        case USER_LIKE_REQUEST:
+            return { ...state, loading: true };
+        case USER_LIKE_SUCCESS:
+            return {
+                loading: false,
+                success: action.payload.success,
+                msg: action.payload.msg,
+            };
+        case USER_LIKE_FAIL:
+            return { loading: false, error: action.payload.msg };
+        default:
+            return state;
+    }
+};
+
+export const userDisLikeReducer = (state = {}, action) => {
+    switch (action.type) {
+        case USER_DISLIKE_REQUEST:
+            return { ...state, loading: true };
+        case USER_DISLIKE_SUCCESS:
+            return {
+                loading: false,
+                success: action.payload.success,
+                msg: action.payload.msg,
+            };
+        case USER_DISLIKE_FAIL:
             return { loading: false, error: action.payload.msg };
         default:
             return state;

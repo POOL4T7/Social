@@ -1,6 +1,6 @@
 import React from "react";
 
-const Modal = ({ _id, user, set, setFollow, follow }) => {
+const Modal = ({ _id, user, set, setFollow, follow, followHandler }) => {
   return (
     <div
       className="modal fade"
@@ -32,7 +32,13 @@ const Modal = ({ _id, user, set, setFollow, follow }) => {
               <div>
                 <img
                   className="rounded"
-                  src={user.profile}
+                  src={
+                    user.profile
+                      ? user.profile
+                      : user.gender === "Male"
+                      ? "/assests/images/boy.jpg"
+                      : "/assests/images/girl.jpg"
+                  }
                   alt="profile"
                   width="100%"
                 />
@@ -71,7 +77,10 @@ const Modal = ({ _id, user, set, setFollow, follow }) => {
             </button>
             <button
               className="btn btn-success"
-              onClick={() => setFollow(!follow)}
+              onClick={(e) => {
+                setFollow(!follow);
+                followHandler(e);
+              }}
             >
               {follow ? "Unfollow " : "Follow"}
             </button>

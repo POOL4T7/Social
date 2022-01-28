@@ -26,10 +26,10 @@ const Register = () => {
     }
   };
   useEffect(() => {
-    if (userInfo?.token) {
+    if (userInfo?.userId) {
       navigate("/");
     }
-  }, [navigate, redirect, userInfo?.token]);
+  }, [navigate, userInfo?.userId]);
 
   return (
     <>

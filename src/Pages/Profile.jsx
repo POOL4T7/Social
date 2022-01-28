@@ -17,6 +17,7 @@ const Profile = () => {
     age: "",
     followers: "",
     followings: "",
+    likes: "",
     email: "",
     buttonText: "Update",
     buttonDisable: false,
@@ -31,6 +32,7 @@ const Profile = () => {
     age,
     followers,
     followings,
+    likes,
     buttonText,
     buttonDisable,
   } = values;
@@ -80,6 +82,7 @@ const Profile = () => {
           bio: profile.bio,
           followers: user.followers.length,
           followings: user.followings.length,
+          likes: user.likes.length,
         });
       }
     }
@@ -172,6 +175,34 @@ const Profile = () => {
                   disabled
                 />
                 <label htmlFor="followings">Followings</label>
+              </div>
+            </div>
+          </div>
+          <div className="row g-2 mb-3">
+            <div className="col-md">
+              <div className="form-floating">
+                <input
+                  type="email"
+                  className="form-control"
+                  id="followers"
+                  placeholder="followers"
+                  value={likes}
+                  disabled
+                />
+                <label htmlFor="followers">Likes</label>
+              </div>
+            </div>
+            <div className="col-md">
+              <div className="form-floating">
+                <input
+                  type="email"
+                  className="form-control"
+                  id="followings"
+                  placeholder="followings"
+                  value="In pro membership"
+                  disabled
+                />
+                <label htmlFor="followings">Dislike</label>
               </div>
             </div>
           </div>

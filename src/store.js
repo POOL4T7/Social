@@ -8,6 +8,8 @@ import {
     usersListReducer,
     userFollowReducer,
     userUnFollowReducer,
+    userLikeReducer,
+    userDisLikeReducer,
 } from "./reducers/userReducer";
 
 // import {
@@ -24,6 +26,8 @@ const reducer = combineReducers({
     usersList: usersListReducer,
     followUser: userFollowReducer,
     unFollowUser: userUnFollowReducer,
+    likeUser: userLikeReducer,
+    disLikeUser: userDisLikeReducer
     // userFriendList: userFriendListReducer,
     // followUser: userFollowFriendReducer,
     // unfollowUser: userUnFollowFriendReducer,
