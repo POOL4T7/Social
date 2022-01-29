@@ -5,10 +5,19 @@ const MessageHeader = ({ user }) => {
     <div className="chat-header clearfix">
       <div className="row">
         <div className="col-lg-6">
-          <img src={user.profile} alt="avatar" />
+          <img
+            src={
+              user.profileDetails.profile
+                ? user.profileDetails.profile
+                : user.profileDetails.gender === "Male"
+                ? "/assests/images/boy.jpg"
+                : "/assests/images/girl.jpg"
+            }
+            alt="avatar"
+          />
           <div className="chat-about">
-            <h6 className="m-b-0">{user.name}</h6>
-            <small>Last seen: 10 min ago</small>
+            <h6 className="m-b-0">{user.profileDetails.name}</h6>
+            <small>Last seen: {new Date().toISOString()}</small>
           </div>
         </div>
       </div>

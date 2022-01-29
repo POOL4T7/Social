@@ -15,7 +15,7 @@ const Navbar = () => {
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <div className="container">
         <Link className="navbar-brand" to="/">
-          Chat App
+          Social
         </Link>
         <button
           className="navbar-toggler"
@@ -36,7 +36,7 @@ const Navbar = () => {
                 aria-current="page"
                 to="/dashboard"
               >
-                Home
+                Dashboard
               </Link>
             </li>
           </ul>

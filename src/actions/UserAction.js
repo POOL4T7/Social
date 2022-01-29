@@ -21,6 +21,9 @@ import {
     USER_DISLIKE_REQUEST,
     USER_DISLIKE_SUCCESS,
     USER_DISLIKE_FAIL,
+    USERS_FRIENDS_LIST_REQUEST,
+    USERS_FRIENDS_LIST_SUCCESS,
+    USERS_FRIENDS_LIST_FAIL,
 } from "../constraints/UserConstraint";
 import { updateUser, getCookie } from "../Utils/helper";
 import { toast } from "react-toastify";
@@ -182,12 +185,18 @@ export const disLikeUser = (userId) => async (dispatch) => {
 
 export const getUsersFriendList = () => async (dispatch) => {
     try {
-        dispatch({ type: USERS_LIST_REQUEST });
-        const { data } = await axios.get("/user/list");
-        dispatch({ type: USERS_LIST_SUCCESS, payload: data });
+        dispatch({ type: USERS_FRIENDS_LIST_REQUEST });
+        const token = getCookie("token");
+        const config = {
+            headers: {
+                "login-token": token,
+            },
+        };
+        const { data } = await axios.get("/user/followings",config);
+        dispatch({ type: USERS_FRIENDS_LIST_SUCCESS, payload: data });
     } catch (e) {
         dispatch({
-            type: USERS_LIST_FAIL,
+            type: USERS_FRIENDS_LIST_FAIL,
             payload:
                 e.response && !e.response.data.success ? e.response.data : e.message,
         });

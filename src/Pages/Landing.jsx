@@ -15,14 +15,15 @@ const Landing = () => {
   const usersList = useSelector((state) => state.usersList);
   const { List, loading, error, success } = usersList;
 
-
   useEffect(() => {
-    if (!loading && !success) {
-      dispatch(getUsersList());
-    } else {
-      setUsers(List);
+    if (userInfo?.userId) {
+      if (!List && !loading) {
+        dispatch(getUsersList());
+      } else {
+        setUsers(List);
+      }
     }
-  }, [List, dispatch, loading, success]);
+  }, [List, dispatch, loading, success, userInfo?.userId, error]);
 
   useEffect(() => {
     let users = Users?.filter((user) => {
@@ -38,7 +39,7 @@ const Landing = () => {
         <>
           <div className="container  mt-5">
             {error ? (
-              <h1>{error}</h1>
+              <h1 className="text-center">{error}</h1>
             ) : (
               <>
                 <h3 className="text-center mb-5">

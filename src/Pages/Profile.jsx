@@ -73,7 +73,7 @@ const Profile = () => {
       if (!user.email && !user.userId) {
         dispatch(getUserProfileDetails("profile"));
       } else {
-        let profile = user.profileDetails;
+        let profile = user?.profileDetails;
         setValues({
           ...values,
           name: profile.name,
@@ -220,9 +220,9 @@ const Profile = () => {
             />
             <label htmlFor="email">Email address</label>
           </div>
-          <div class="form-floating mb-3">
+          <div className="form-floating mb-3">
             <textarea
-              class="form-control"
+              className="form-control"
               placeholder="Add your bio"
               id="bio"
               style={{ height: "100px" }}

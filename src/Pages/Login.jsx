@@ -1,5 +1,5 @@
 import FormConatiner from "../Components/FormConatiner";
-import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { login } from "../actions/AuthAction";
 import { useDispatch, useSelector } from "react-redux";

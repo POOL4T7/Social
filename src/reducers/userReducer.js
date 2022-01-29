@@ -23,6 +23,10 @@ import {
     USER_DISLIKE_REQUEST,
     USER_DISLIKE_SUCCESS,
     USER_DISLIKE_FAIL,
+    USERS_FRIENDS_LIST_REQUEST,
+    USERS_FRIENDS_LIST_SUCCESS,
+    USERS_FRIENDS_LIST_FAIL,
+    USERS_FRIENDS_LIST_RESET,
 } from "../constraints/UserConstraint";
 
 export const userDetailsReducer = (state = { user: {} }, action) => {
@@ -74,7 +78,9 @@ export const usersListReducer = (state = {}, action) => {
                 msg: action.payload.msg,
             };
         case USERS_LIST_FAIL:
-            return { loading: false, error: action.payload.msg };
+            return { loading: false, error: action.payload.msg || "Server error" };
+        case USERS_LIST_RESET:
+            return { state: {} };
         default:
             return state;
     }
@@ -143,6 +149,26 @@ export const userDisLikeReducer = (state = {}, action) => {
             };
         case USER_DISLIKE_FAIL:
             return { loading: false, error: action.payload.msg };
+        default:
+            return state;
+    }
+};
+
+export const userFriendsListReducer = (state = {}, action) => {
+    switch (action.type) {
+        case USERS_FRIENDS_LIST_REQUEST:
+            return { ...state, loading: true };
+        case USERS_FRIENDS_LIST_SUCCESS:
+            return {
+                loading: false,
+                friendsList: action.payload.data,
+                success: action.payload.success,
+                msg: action.payload.msg,
+            };
+        case USERS_FRIENDS_LIST_FAIL:
+            return { loading: false, error: action.payload.msg };
+        case USERS_FRIENDS_LIST_RESET:
+            return { state: {} };
         default:
             return state;
     }

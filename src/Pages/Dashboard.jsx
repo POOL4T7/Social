@@ -1,13 +1,24 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 // import { io } from "socket.io-client";
 import Online from "../Components/Online";
-import { messages, Friends } from "../data";
+import { messages } from "../data";
 import Message from "../Components/Message";
 import MessageHeader from "../Components/MessageHeader";
+import { useSelector, useDispatch } from "react-redux";
+import { getUsersFriendList } from "../actions/UserAction";
+import { useNavigate } from "react-router-dom";
+import Spinner from "../Components/Spinner";
 
 const Dashboard = () => {
+  const dispatch = useDispatch();
+  const navigator = useNavigate();
   const [currentChat, setCurrentChat] = useState(null);
-  const [findFriend, setFindFriend] = useState(Friends);
+  const [findFriend, setFindFriend] = useState([]);
+  const [friends, setFriends] = useState([]);
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
+  const userFriends = useSelector((state) => state.userFriends);
+  const { friendsList, loading, error } = userFriends;
 
   // const socket = io("ws://localhost:8080");
   // useEffect(() => {
@@ -20,13 +31,33 @@ const Dashboard = () => {
   //   });
   // }, [socket]);
 
+  useEffect(() => {
+    if (!userInfo?.userId) {
+      navigator("/login");
+    } else {
+      if (!friendsList) {
+        dispatch(getUsersFriendList());
+      } else {
+        setFriends(friendsList);
+        setFindFriend(friendsList);
+      }
+    }
+  }, [dispatch, friendsList, navigator, userInfo]);
+
   const searchedFriend = (e) => {
     e.preventDefault();
-    let friendarray = Friends.filter((friend) => {
+    let friendarray = friends.filter((friend) => {
       if (e.target.value === "") {
         return friend;
       }
-      return friend.name.toLowerCase().includes(e.target.value?.toLowerCase());
+      return (
+        friend.profileDetails.name
+          .toLowerCase()
+          .includes(e.target.value.toLowerCase()) ||
+        friend.profileDetails.username
+          .toLowerCase()
+          .includes(e.target.value.toLowerCase())
+      );
     });
     setFindFriend(friendarray);
   };
@@ -48,11 +79,17 @@ const Dashboard = () => {
                   />
                 </div>
                 <ul className="list-unstyled chat-list mt-2 mb-0 people-list-start">
-                  {findFriend.map((user) => (
-                    <div key={user.id} onClick={() => setCurrentChat(user)}>
-                      <Online user={user} />
-                    </div>
-                  ))}
+                  {loading ? (
+                    <Spinner />
+                  ) : error ? (
+                    <h1>{error}</h1>
+                  ) : (
+                    findFriend?.map((user) => (
+                      <div key={user._id} onClick={() => setCurrentChat(user)}>
+                        <Online user={user} />
+                      </div>
+                    ))
+                  )}
                 </ul>
               </div>
               <div className="chat">
@@ -72,7 +109,7 @@ const Dashboard = () => {
                           ))
                         ) : (
                           <h4 className="text-center">
-                            Say Hello to {currentChat.name}
+                            Say Hello to {currentChat.profileDetails.name}
                           </h4>
                         )}
                       </ul>
