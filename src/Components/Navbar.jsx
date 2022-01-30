@@ -64,6 +64,11 @@ const Navbar = () => {
                         </Link>
                       </li>
                       <li>
+                        <Link className="dropdown-item" to="/friends">
+                          Friends
+                        </Link>
+                      </li>
+                      <li>
                         <Link className="dropdown-item" to="/setting">
                           Settings
                         </Link>

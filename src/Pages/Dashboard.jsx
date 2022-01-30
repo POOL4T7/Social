@@ -1,13 +1,11 @@
 import { useEffect, useState } from "react";
 // import { io } from "socket.io-client";
 import Online from "../Components/Online";
-import { messages } from "../data";
-import Message from "../Components/Message";
-import MessageHeader from "../Components/MessageHeader";
 import { useSelector, useDispatch } from "react-redux";
 import { getUsersFriendList } from "../actions/UserAction";
 import { useNavigate } from "react-router-dom";
 import Spinner from "../Components/Spinner";
+import Messenger from "../Components/Messenger";
 
 const Dashboard = () => {
   const dispatch = useDispatch();
@@ -43,6 +41,8 @@ const Dashboard = () => {
       }
     }
   }, [dispatch, friendsList, navigator, userInfo]);
+
+
 
   const searchedFriend = (e) => {
     e.preventDefault();
@@ -94,41 +94,9 @@ const Dashboard = () => {
               </div>
               <div className="chat">
                 {currentChat ? (
-                  <>
-                    <MessageHeader user={currentChat} />
-                    <div className="chat-history">
-                      <ul className="m-b-0">
-                        {messages.length > 0 ? (
-                          messages?.map((msg) => (
-                            <Message
-                              key={msg.id}
-                              message={msg.message}
-                              time={msg.time}
-                              own={msg.own}
-                            />
-                          ))
-                        ) : (
-                          <h4 className="text-center">
-                            Say Hello to {currentChat.profileDetails.name}
-                          </h4>
-                        )}
-                      </ul>
-                    </div>
-                    <div className="chat-message clearfix">
-                      <div className="input-group mb-0">
-                        <div className="input-group-prepend">
-                          <span className="input-group-text">
-                            <i className="fa fa-send"></i>
-                          </span>
-                        </div>
-                        <input
-                          type="text"
-                          className="form-control"
-                          placeholder="Enter text here..."
-                        />
-                      </div>
-                    </div>
-                  </>
+                  <div>
+                    <Messenger currentUser={currentChat} />
+                  </div>
                 ) : (
                   <h1 className="text-center">Start a conversation</h1>
                 )}

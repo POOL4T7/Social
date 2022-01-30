@@ -14,8 +14,8 @@ function App() {
   return (
     <>
       <Router>
+        <Navbar />
         <div className="main">
-          <Navbar />
           <ToastContainer />
           <Routes>
             <Route path="/" element={<Landing />} />
