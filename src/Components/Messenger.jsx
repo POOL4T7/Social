@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import Message from "./Message";
+import io from "socket.io-client";
 import MessageHeader from "./MessageHeader";
 import axios from "../Utils/axios";
 import { getCookie } from "../Utils/helper";
@@ -7,10 +8,40 @@ import { useSelector } from "react-redux";
 
 const Messenger = ({ currentUser }) => {
   let scrollRef = useRef();
+  const socket = useRef();
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
+  const [loggedinUser, setLoggedinUser] = useState([]);
+  const [arrivalMessage, setArrivalMessage] = useState(null);
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
+
+  useEffect(() => {
+    socket.current = io("ws://localhost:8080");
+    socket.current.on("getMessage", (data) => {
+      console.log(data);
+      setArrivalMessage({
+        sender: data.senderId,
+        text: data.text,
+        createdAt: Date.now(),
+      });
+    });
+  }, []);
+
+  useEffect(() => {
+    if (arrivalMessage) {
+      setMessages((pre) => [...pre, arrivalMessage]);
+    }
+  }, [arrivalMessage, currentUser]);
+
+  useEffect(() => {
+    socket.current.emit("addUser", { userId: userInfo.userId });
+    socket.current.on("getUsers", (users) => {
+      setLoggedinUser(
+        userInfo.followings.filter((f) => users.some((u) => u.userId === f))
+      );
+    });
+  }, [currentUser.userId, userInfo.followings, userInfo.userId]);
 
   useEffect(() => {
     const fetchMessage = async () => {
@@ -43,6 +74,11 @@ const Messenger = ({ currentUser }) => {
             "login-token": token,
           },
         };
+        await socket.current.emit("sendMessage", {
+          senderId: userInfo.userId,
+          receiverId: currentUser.userId,
+          text: newMessage,
+        });
         const { data } = await axios.post(
           `/message/${currentUser.userId}`,
           msg,
@@ -62,7 +98,10 @@ const Messenger = ({ currentUser }) => {
 
   return (
     <>
-      <MessageHeader user={currentUser} />
+      <MessageHeader
+        user={currentUser}
+        online={loggedinUser.includes(currentUser.userId)}
+      />
       <div className="chat-history">
         <ul className="m-b-0">
           {messages.length > 0 ? (

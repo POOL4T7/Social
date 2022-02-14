@@ -1,0 +1,79 @@
+#chat {
+  height: 90vh;
+}
+
+#searchbar:focus {
+  box-shadow: none;
+}
+
+.users {
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  margin-top: 5px;
+}
+
+.users:hover {
+  cursor: pointer;
+  transform: scale(1.05);
+  background-color: #f8f9fa;
+}
+
+#message-history {
+  position: relative;
+}
+
+.messengerHeader {
+  display: flex;
+  justify-content: flex-start;
+  background-color: #f8f9fa;
+}
+
+.friends-list {
+  height: 70vh;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.chat-history {
+  height: 70vh;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  margin-bottom: 2.4rem;
+}
+
+.recieved {
+  width: 90%;
+}
+
+.recieved-time {
+  font-size: 13px;
+  margin-left: 18px;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  padding-right: 10px;
+  padding-bottom: 3px;
+}
+
+.send {
+  width: 90%;
+  /* margin-right: 1.5rem; */
+}
+
+.send-time {
+  font-size: 13px;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  padding-right: 10px;
+  padding-bottom: 3px;
+}
+
+.chat-message {
+  position: absolute;
+  bottom: 0;
+  width: 97%;
+}
+
+.form-control:focus {
+  box-shadow: none;
+}
