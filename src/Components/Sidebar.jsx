@@ -1,18 +1,20 @@
+import Spinner from "./Spinner";
 
-const Sidebar = ({ friends, onlineUsers, setCurrentUser }) => {
+const Sidebar = ({ friends, onlineUsers, setCurrentUser, loading }) => {
   return (
     <div className="col-3" id="online-users">
       <div className="form-floating mb-2">
         <input
           style={{ borderRadius: "30px" }}
           type="text"
-          class="form-control"
+          className="form-control"
           id="searchbar"
-          placeholder="name@example.com"
+          placeholder="Write your message"
         />
-        <label for="searchbar">Search user</label>
+        <label htmlFor="searchbar">Search user</label>
       </div>
       <div className="friends-list">
+        {loading && <Spinner />}
         {friends.map((u) => (
           <div
             key={u._id}

@@ -8,6 +8,7 @@ import Message from "../Components/Message";
 import { getCookie } from "../Utils/helper";
 import axios from "../Utils/axios";
 import { useNavigate } from "react-router-dom";
+import Spinner from "../Components/Spinner";
 
 const Chat = () => {
   let scrollRef = useRef();
@@ -19,13 +20,14 @@ const Chat = () => {
   const [currentUser, setCurrentUser] = useState({});
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
+  const [messageLoading, setMessageLoading] = useState(false);
   let socket = useRef();
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
   const userFriends = useSelector((state) => state.userFriends);
   const { friendsList, loading } = userFriends;
   useEffect(() => {
-    socket.current = io("ws://localhost:8080");
+    socket.current = io("https://social1server.herokuapp.com");
     socket.current.on("getMessage", (data) => {
       setArrivalMessage({
         sender: data.senderId,
@@ -40,7 +42,7 @@ const Chat = () => {
       setMessages((pre) => [...pre, arrivalMessage]);
     }
   }, [arrivalMessage, currentUser]);
-  console.log("arrivalMessage", arrivalMessage);
+
   useEffect(() => {
     socket.current.emit("addUser", { userId: userInfo.userId });
     socket.current.on("getUsers", (users) => {
@@ -77,8 +79,10 @@ const Chat = () => {
           "login-token": token,
         },
       };
+      setMessageLoading(true);
       const res = await axios.get(`/message/${currentUser.userId}`, config);
       setMessages(res.data.data);
+      setMessageLoading(false);
     };
     if (currentUser.userId) {
       fetchMessage();
@@ -129,6 +133,7 @@ const Chat = () => {
           friends={friends}
           onlineUsers={onlineUsers}
           setCurrentUser={setCurrentUser}
+          loading={loading}
         />
         {currentUser?.userId && (
           <div className="col-9 " id="message-history">
@@ -163,16 +168,21 @@ const Chat = () => {
                 )}
               </div>
             </div>
-            <div className="chat-history d-flex flex-column border">
-              {messages?.map((m) => (
-                <div ref={scrollRef}>
-                  <Message
-                    message={m.text}
-                    time={m.createdAt}
-                    own={userInfo.userId === m.senderId}
-                  />
-                </div>
-              ))}
+            <div className="chat-history d-flex flex-column border ">
+              {messageLoading && <Spinner />}
+              {messages.length > 0 ? (
+                messages.map((m) => (
+                  <div ref={scrollRef}>
+                    <Message
+                      message={m.text}
+                      time={m.createdAt}
+                      own={userInfo.userId === m.senderId}
+                    />
+                  </div>
+                ))
+              ) : (
+                <h1>Start Converstion</h1>
+              )}
             </div>
             <form className="chat-message " onSubmit={handleSubmit}>
               <div className="input-group mb-0">
