@@ -2,7 +2,7 @@ import React from "react";
 
 const Spinner = () => {
   return (
-    <div className="container text-center">
+    <div className="container text-center mt-3">
       <div
         className="spinner-border"
         role="status"

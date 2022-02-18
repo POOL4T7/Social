@@ -12,7 +12,9 @@ const Message = ({ message, time, own }) => {
             }}
           >
             <div className="send">{message}</div>
-            <span className="send-time">{timeSince(new Date(time))}</span>
+            <span className="send-time">
+              {timeSince(new Date(time)) || "Just now"}
+            </span>
           </div>
         </div>
       ) : (
@@ -26,7 +28,9 @@ const Message = ({ message, time, own }) => {
             }}
           >
             <div className="recieved">{message}</div>
-            <span className="recieved-time">{timeSince(new Date(time))}</span>
+            <span className="recieved-time">
+              {timeSince(new Date(time)) || "Just now"}
+            </span>
           </div>
         </div>
       )}

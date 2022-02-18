@@ -27,7 +27,7 @@ const Chat = () => {
   const userFriends = useSelector((state) => state.userFriends);
   const { friendsList, loading } = userFriends;
   useEffect(() => {
-    socket.current = io("https://social1server.herokuapp.com");
+    socket.current = io("http://localhost:8080/");
     socket.current.on("getMessage", (data) => {
       setArrivalMessage({
         sender: data.senderId,
@@ -117,15 +117,18 @@ const Chat = () => {
         msg,
         config
       );
+      console.log('data', data)
       setMessages([...messages, data.data]);
       setNewMessage("");
     } catch (e) {
       console.log(e.message);
     }
   };
+
   useEffect(() => {
     scrollRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
+
   return (
     <div className="p-5 container" id="chat">
       <div className="row">
@@ -169,10 +172,11 @@ const Chat = () => {
               </div>
             </div>
             <div className="chat-history d-flex flex-column border ">
-              {messageLoading && <Spinner />}
-              {messages.length > 0 ? (
+              {messageLoading ? (
+                <Spinner />
+              ) : messages.length > 0 ? (
                 messages.map((m) => (
-                  <div ref={scrollRef}>
+                  <div ref={scrollRef} key={m._id}>
                     <Message
                       message={m.text}
                       time={m.createdAt}
@@ -181,10 +185,10 @@ const Chat = () => {
                   </div>
                 ))
               ) : (
-                <h1>Start Converstion</h1>
+                <h1 className="text-center">Start Converstion</h1>
               )}
             </div>
-            <form className="chat-message " onSubmit={handleSubmit}>
+            <form className="chat-message">
               <div className="input-group mb-0">
                 <input
                   type="text"
@@ -193,6 +197,13 @@ const Chat = () => {
                   value={newMessage}
                   onChange={(e) => setNewMessage(e.target.value)}
                 />
+                <button
+                  type="submit"
+                  className="btn btn-outline-success btn-sm"
+                  onClick={handleSubmit}
+                >
+                  <i className="fa fa-send"></i>
+                </button>
               </div>
             </form>
           </div>
