@@ -27,7 +27,7 @@ const Chat = () => {
   const userFriends = useSelector((state) => state.userFriends);
   const { friendsList, loading } = userFriends;
   useEffect(() => {
-    socket.current = io("http://localhost:8080/");
+    socket.current = io("https://social1server.herokuapp.com");
     socket.current.on("getMessage", (data) => {
       setArrivalMessage({
         sender: data.senderId,
@@ -117,7 +117,6 @@ const Chat = () => {
         msg,
         config
       );
-      console.log('data', data)
       setMessages([...messages, data.data]);
       setNewMessage("");
     } catch (e) {
